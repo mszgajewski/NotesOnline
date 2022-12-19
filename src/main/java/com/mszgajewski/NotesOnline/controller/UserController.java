@@ -42,7 +42,6 @@ public class UserController {
 
         String email = principal.getName();
         User user = userRepository.findByEmail(email);
-
         Pageable pageable = PageRequest.of(page, 5, Sort.by("id").descending());
         Page<Notes> notes = notesRepository.findNotesByUser(user.getId(), pageable);
 
@@ -97,9 +96,9 @@ public class UserController {
         String email = principal.getName();
         User user = userRepository.findByEmail(email);
         notes.setUser(user);
-        Notes updateNotes = notesRepository.save(notes);
+        Notes n = notesRepository.save(notes);
 
-        if (updateNotes!=null){
+        if (n!=null){
             httpSession.setAttribute("msg", "Dodano notatkę");
         } else {
             httpSession.setAttribute("msg", "Błąd!");
@@ -116,5 +115,24 @@ public class UserController {
         }
 
         return "redirect:/user/view_notes/0";
+    }
+
+    @PostMapping("/update_user")
+    public String updateUser(@ModelAttribute User user,Model model, HttpSession session){
+
+        Optional<User> editedUser = userRepository.findById(user.getId());
+
+        if(editedUser != null){
+            user.setPassword(editedUser.get().getPassword());
+            user.setRole(editedUser.get().getRole());
+            user.setEmail(editedUser.get().getEmail());
+            User newUser = userRepository.save(user);
+
+            if (newUser != null){
+                model.addAttribute("user", newUser);
+                session.setAttribute("msg", "Profil zaktualizowany");
+            }
+        }
+        return "redirect:/user/viewProfile";
     }
 }

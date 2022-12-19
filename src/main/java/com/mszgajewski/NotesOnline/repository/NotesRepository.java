@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface NotesRepository extends JpaRepository<Notes, Integer> {
 
-    @Query("from Notes as n where n.User.id=:uid")
+    @Query("from Notes as n where n.user.id=:uid")
     Page<Notes> findNotesByUser(@Param("uid") long uid, Pageable pageable);
 }
