@@ -9,33 +9,26 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import javax.servlet.http.HttpSession;
 
 @Controller
 public class HomeController {
-
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
-
     @GetMapping("/")
     public String home(){
         return "home";
     }
-
     @GetMapping("/login")
     public String login(){
         return "login";
     }
-
     @GetMapping("/signup")
     public String signup(){
         return "signup";
     }
-
     @PostMapping("/saveUser")
     public String saveUser(@ModelAttribute User user, Model model, HttpSession httpSession){
 

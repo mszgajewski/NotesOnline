@@ -113,7 +113,6 @@ public class UserController {
             notesRepository.delete(notes.get());
             httpSession.setAttribute("msg", "Usunięto");
         }
-
         return "redirect:/user/view_notes/0";
     }
 

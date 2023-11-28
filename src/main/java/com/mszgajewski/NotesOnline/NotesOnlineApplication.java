@@ -11,5 +11,4 @@ public class NotesOnlineApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(NotesOnlineApplication.class, args);
 	}
-
 }
